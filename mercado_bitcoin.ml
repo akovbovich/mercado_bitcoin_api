@@ -7,18 +7,12 @@ open Cohttp_lwt_unix
 
 module Header = Cohttp.Header
                   
-let tapi_id = Sys.getenv_exn "MB_TAPI_ID";;
-let tapi_secret = Sys.getenv_exn "MB_TAPI_SECRET";;
-let pin = Sys.getenv_exn "MB_PIN";;
+let mb_tapi_id = Sys.getenv_exn "MB_TAPI_ID";;
+let mb_tapi_secret = Sys.getenv_exn "MB_TAPI_SECRET";;
 
-
-let () =
-  print_endline tapi_id;
-  print_endline tapi_secret;
-  print_endline pin
-
-let api_uri = Uri.of_string "https://www.mercadobitcoin.net/tapi/v3/"
-
+let request_host = "https://www.mercadobitcoin.net"
+let request_path = "/tapi/v3/"
+                     
 let c_of_str = Cstruct.of_string
 
 let c_to_str = Cstruct.to_string
@@ -31,9 +25,6 @@ let sign ~key msg =
   |> function
     `Hex str -> str
 
-let sign_body body =
-  let 
-
 let nonce () =
   Time.now ()
   |> Time.to_epoch
@@ -42,25 +33,28 @@ let nonce () =
     | ',' | '.' -> false
     | _ -> true end
 
-let query_params mb_method =
-  [ "tapi_nonce", "1"
-  ; "tapi_method", mb_method]
+let make_params mb_method =
+  [ "tapi_nonce", [nonce ()]
+  ; "tapi_method", [mb_method]]
 
+let encoded_params mb_method =
+  Uri.encoded_of_query (make_params mb_method)
 
-let tapi_header path =
-  let mac = sign ~key:tapi_secret path in
-  [ "TAPI-ID", tapi_id
-  ; "TAPI-MAC", mac]
-
-let get_uri mb_method =
-  Uri.with_query' api_uri (query_params mb_method);;
+let calculate_tapi_mac enc_params =
+  let msg = (request_path ^ "?" ^ enc_params) in
+  let () = print_endline msg in 
+  sign ~key:mb_tapi_secret msg
+      
+let tapi_header enc_params =
+  [ "TAPI-ID", mb_tapi_id
+  ; "TAPI-MAC", calculate_tapi_mac enc_params]
 
 let request mb_method =
-  let uri = Uri.with_query' api_uri (query_params mb_method) in
-  let body = "tapi_nonce=1&tapi_method=get_account_info" in
+  let uri = Uri.of_string @@ request_host ^ request_path in
+  let body = encoded_params mb_method in 
   let headers_list =
     let length = String.length body in
-    tapi_header (Uri.path uri) @
+    tapi_header body @
     [ "Content-Type" , "application/x-www-form-urlencoded"
     ; "Content-length", Int.to_string (length)] in
   let headers = Header.of_list headers_list in 
@@ -71,18 +65,12 @@ let request mb_method =
   Client.post ~headers uri
     ~body:(Cohttp_lwt_body.of_string body)
 
-(* Remaining things to do
-   - encode as form params
-   - build the request and test agains MB *)
-(*let request ~tapi_method*)
-
-
 module Test = struct
-  let tapi_id="1ebda7d457ece1330dff1c9e04cd62c4e02d1835968ff89d2fb2339f06f73028"
+  let tapi_secret="1ebda7d457ece1330dff1c9e04cd62c4e02d1835968ff89d2fb2339f06f73028"
   let tapi_method = "/tapi/v3/?tapi_method=list_orders&tapi_nonce=1"
   let tapi_mac_result=
     "7f59ea8749ba596d5c23fa242a531746b918e5e61c9f6c8663a699736db503980f3a507ff7e2ef1336f7888d684a06c9a460d18290e7b738a61d03e25ffdeb76"
   let test () =
-    sign ~key:tapi_id tapi_method |>
+    sign ~key:tapi_secret tapi_method |>
     (=) tapi_mac_result
 end
