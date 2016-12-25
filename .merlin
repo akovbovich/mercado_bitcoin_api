@@ -4,3 +4,5 @@ PKG hex
 PKG cohttp
 PKG async
 PKG lwt
+SRC .
+B _build
