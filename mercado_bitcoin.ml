@@ -7,8 +7,8 @@ open Cohttp_lwt_unix
 
 module Header = Cohttp.Header
                   
-let mb_tapi_id_env = Sys.getenv_exn "MB_TAPI_ID";;
-let mb_tapi_secret_env = Sys.getenv_exn "MB_TAPI_SECRET";;
+let mb_id = Sys.getenv_exn "MB_TAPI_ID";;
+let mb_secret = Sys.getenv_exn "MB_TAPI_SECRET";;
 
 let request_host = "https://www.mercadobitcoin.net"
 
