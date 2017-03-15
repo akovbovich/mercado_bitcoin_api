@@ -25,6 +25,11 @@ let sign ~key msg =
   |> function
     `Hex str -> str
 
+let calculate_tapi_mac ~tapi_secret body =
+  let msg = (request_path ^ "?" ^ body) in
+  let () = print_endline msg in 
+  sign ~key:tapi_secret msg
+
 let nonce () =
   Time.now ()
   |> Time.to_epoch
@@ -33,28 +38,21 @@ let nonce () =
     | ',' | '.' -> false
     | _ -> true end
 
-let make_params nonce mb_method =
-  [ "tapi_nonce", [nonce]
-  ; "tapi_method", [mb_method]]
-
-let calculate_tapi_mac ~tapi_secret enc_params =
-  let msg = (request_path ^ "?" ^ enc_params) in
-  let () = print_endline msg in 
-  sign ~key:tapi_secret msg
-      
-let tapi_header ~tapi_id ~tapi_secret enc_params =
-  [ "TAPI-ID", tapi_id
-  ; "TAPI-MAC", calculate_tapi_mac ~tapi_secret enc_params]
-
 let request ~tapi_id ~tapi_secret mb_method =
   let uri = Uri.of_string @@ request_host ^ request_path in
-  let body = Uri.encoded_of_query (make_params (nonce ()) mb_method) in 
-  let headers_list =
+
+  let body = Uri.encoded_of_query
+      [ "tapi_nonce", [nonce ()]
+      ; "tapi_method", [mb_method]] in 
+
+  let headers =
     let length = String.length body in
-    tapi_header ~tapi_id ~tapi_secret body @
-    [ "Content-Type" , "application/x-www-form-urlencoded"
-    ; "Content-length", Int.to_string (length)] in
-  let headers = Header.of_list headers_list in 
+    Header.of_list
+      [ "TAPI-ID", tapi_id
+      ; "TAPI-MAC", calculate_tapi_mac ~tapi_secret body
+      ; "Content-Type" , "application/x-www-form-urlencoded"
+      ; "Content-length", Int.to_string (length)] in
+
   print_endline @@ Header.to_string headers;
   print_endline @@ (Uri.to_string uri);
   print_endline @@ body;
