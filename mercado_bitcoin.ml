@@ -11,15 +11,12 @@ let mb_tapi_id_env = Sys.getenv_exn "MB_TAPI_ID";;
 let mb_tapi_secret_env = Sys.getenv_exn "MB_TAPI_SECRET";;
 
 let request_host = "https://www.mercadobitcoin.net"
+
 let request_path = "/tapi/v3/"
                      
-let c_of_str = Cstruct.of_string
-
-let c_to_str = Cstruct.to_string
-
 let sign ~key msg =
-  let key = c_of_str key in
-  let msg = c_of_str msg in
+  let key = Cstruct.of_string key in
+  let msg = Cstruct.of_string msg in
   Hash.SHA512.hmac ~key msg
   |> Hex.of_cstruct
   |> function
