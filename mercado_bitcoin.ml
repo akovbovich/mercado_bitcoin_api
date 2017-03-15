@@ -7,8 +7,8 @@ open Cohttp_lwt_unix
 
 module Header = Cohttp.Header
                   
-let mb_tapi_id = Sys.getenv_exn "MB_TAPI_ID";;
-let mb_tapi_secret = Sys.getenv_exn "MB_TAPI_SECRET";;
+let mb_tapi_id_env = Sys.getenv_exn "MB_TAPI_ID";;
+let mb_tapi_secret_env = Sys.getenv_exn "MB_TAPI_SECRET";;
 
 let request_host = "https://www.mercadobitcoin.net"
 let request_path = "/tapi/v3/"
@@ -33,28 +33,25 @@ let nonce () =
     | ',' | '.' -> false
     | _ -> true end
 
-let make_params mb_method =
-  [ "tapi_nonce", [nonce ()]
+let make_params nonce mb_method =
+  [ "tapi_nonce", [nonce]
   ; "tapi_method", [mb_method]]
 
-let encoded_params mb_method =
-  Uri.encoded_of_query (make_params mb_method)
-
-let calculate_tapi_mac enc_params =
+let calculate_tapi_mac ~tapi_secret enc_params =
   let msg = (request_path ^ "?" ^ enc_params) in
   let () = print_endline msg in 
-  sign ~key:mb_tapi_secret msg
+  sign ~key:tapi_secret msg
       
-let tapi_header enc_params =
-  [ "TAPI-ID", mb_tapi_id
-  ; "TAPI-MAC", calculate_tapi_mac enc_params]
+let tapi_header ~tapi_id ~tapi_secret enc_params =
+  [ "TAPI-ID", tapi_id
+  ; "TAPI-MAC", calculate_tapi_mac ~tapi_secret enc_params]
 
-let request mb_method =
+let request ~tapi_id ~tapi_secret mb_method =
   let uri = Uri.of_string @@ request_host ^ request_path in
-  let body = encoded_params mb_method in 
+  let body = Uri.encoded_of_query (make_params (nonce ()) mb_method) in 
   let headers_list =
     let length = String.length body in
-    tapi_header body @
+    tapi_header ~tapi_id ~tapi_secret body @
     [ "Content-Type" , "application/x-www-form-urlencoded"
     ; "Content-length", Int.to_string (length)] in
   let headers = Header.of_list headers_list in 
