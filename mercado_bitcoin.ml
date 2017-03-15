@@ -34,12 +34,15 @@ let nonce () =
     | ',' | '.' -> false
     | _ -> true end
 
-let request ~tapi_id ~tapi_secret mb_method =
+let request ~tapi_id ~tapi_secret (params: (string * string) list) mb_method  =
   let uri = Uri.of_string @@ request_host ^ request_path in
 
-  let body = Uri.encoded_of_query
+  let params = List.map ~f:(fun (a,b) -> (a,[b])) params in
+
+  let body = Uri.encoded_of_query @@
       [ "tapi_nonce", [nonce ()]
-      ; "tapi_method", [mb_method]] in 
+      ; "tapi_method", [mb_method]]
+      @ params in 
 
   let headers =
     let length = String.length body in
