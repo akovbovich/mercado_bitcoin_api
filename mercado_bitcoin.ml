@@ -24,7 +24,6 @@ let sign ~key msg =
 
 let calculate_tapi_mac ~tapi_secret body =
   let msg = (request_path ^ "?" ^ body) in
-  let () = print_endline msg in 
   sign ~key:tapi_secret msg
 
 let nonce () =
@@ -49,10 +48,6 @@ let request ~tapi_id ~tapi_secret mb_method =
       ; "TAPI-MAC", calculate_tapi_mac ~tapi_secret body
       ; "Content-Type" , "application/x-www-form-urlencoded"
       ; "Content-length", Int.to_string (length)] in
-
-  print_endline @@ Header.to_string headers;
-  print_endline @@ (Uri.to_string uri);
-  print_endline @@ body;
 
   Client.post ~headers uri
     ~body:(Cohttp_lwt_body.of_string body)
