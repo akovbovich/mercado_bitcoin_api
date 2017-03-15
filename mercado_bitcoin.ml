@@ -34,7 +34,7 @@ let nonce () =
     | ',' | '.' -> false
     | _ -> true end
 
-let request ~tapi_id ~tapi_secret (params: (string * string) list) mb_method  =
+let request ~tapi_id ~tapi_secret ?(params=[]) mb_method  =
   let uri = Uri.of_string @@ request_host ^ request_path in
 
   let params = List.map ~f:(fun (a,b) -> (a,[b])) params in
