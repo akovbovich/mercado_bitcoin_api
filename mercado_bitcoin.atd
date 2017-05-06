@@ -1,0 +1,30 @@
+type 'a response = {
+     response_data: 'a
+     ; status_code: int
+     ; server_unix_timestamp: int
+     ; ?error_message: string option
+}
+
+type system_message={
+     msg_date: int <json repr="string">
+     ; level: string
+     ; event_code: int
+     ; msg_content: string
+}
+
+type system_message_list = {
+     messages: system_message list
+}
+
+type system_messages_response = system_message_list response
+
+type currency_type = [
+       BRL <json name="brl">
+     | BTC <json name="btc">
+     | LTC <json name="ltc">
+]
+
+type info_availability = {
+     available: float
+     ; total: float
+}
