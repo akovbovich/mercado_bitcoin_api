@@ -22,14 +22,3 @@ type system_message_list = {
 }
 
 type system_messages_response = system_message_list response
-
-type currency_type = [
-       BRL <json name="brl">
-     | BTC <json name="btc">
-     | LTC <json name="ltc">
-]
-
-type info_availability = {
-     available: float
-     ; total: float
-}
