@@ -5,12 +5,17 @@ type 'a response = {
      ; ?error_message: string option
 }
 
+
+(* System messages types *)
+
 type system_message={
      msg_date: int <json repr="string">
      ; level: string
      ; event_code: int
      ; msg_content: string
 }
+
+(* TODO: Can this type be unwrapped? since the type makes it implicit that we have "messages" i.e. a list of messages *)
 
 type system_message_list = {
      messages: system_message list

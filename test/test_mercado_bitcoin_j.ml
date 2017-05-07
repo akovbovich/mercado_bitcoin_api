@@ -12,4 +12,5 @@ let (_test_message:unit) =
       {Mercado_bitcoin_j.msg_date = 1453827748
       ; level = "INFO"
       ; event_code = 7000
-      ;msg_content = "Manutenção programada"}
+      ; msg_content = "Manutenção programada para 2015-DEZ-25, janela de até 2 horas, a partir das 14hs. O sistema estará indisponível durante esse período."}
+;;
