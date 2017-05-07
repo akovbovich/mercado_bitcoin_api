@@ -1,0 +1,8 @@
+true: package(core)
+true: package(nocrypto)
+true: package(cohttp.lwt)
+true: package(hex)
+true: package(yojson)
+true: package(atdgen)
+
+<mercado_bitcoin*>: thread
