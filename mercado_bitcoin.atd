@@ -22,3 +22,36 @@ type system_message_list = {
 }
 
 type system_messages_response = system_message_list response
+
+type operation = {
+  operation_id: int
+; quantity: float
+; price: float
+; fee_rate: float
+; executed_timestamp: int
+}
+
+type order = {
+  order_id: int
+; coin_pair: string
+; order_type: int
+; status: int
+; has_fills: bool
+; quantity: float
+; limit_price: float
+; executed_quantity: float
+; executed_price_avg: float
+; fee: float
+; created_timestamp: int
+; updated_timestamp: int
+; operations: operation list }
+
+type order_r = {
+  order : order
+}
+
+type order_response = order_r response
+
+type orders = {
+  orders : order list
+}

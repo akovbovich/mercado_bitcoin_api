@@ -37,3 +37,120 @@ let (_test_response_message:unit) =
        ; status_code = 100
        ; server_unix_timestamp = 1453827748
        ; error_message = None})
+
+
+let (_test_order:unit) =
+  json_file_assert
+    ~file:"test/order_sample.json"
+    ~transform:order_r_of_string
+    ~expected:
+      { order = {
+            order_id = 3
+          ; coin_pair = "BRLBTC"
+          ; order_type = 2
+          ; status = 4
+          ; has_fills = true
+          ; quantity = 1.00000000
+          ; limit_price = 900.00000
+          ; executed_quantity = 1.00000000
+          ; executed_price_avg = 900.00000
+          ; fee = 6.30000000
+          ; created_timestamp = 1453835329
+          ; updated_timestamp = 1453835329
+          ; operations = [
+              {
+                operation_id = 1
+              ; quantity = 1.00000000
+              ; price = 900.00000
+              ; fee_rate = 0.70
+              ; executed_timestamp = 1453835329
+              }
+            ]
+          }
+      }
+
+let (_test_orders:unit) =
+  json_file_assert
+    ~file:"test/orders_sample.json"
+    ~transform:orders_of_string
+    ~expected:
+      { orders = [
+            {
+              order_id = 1
+            ; coin_pair = "BRLBTC"
+            ; order_type = 1
+            ; status = 2
+            ; has_fills = false
+            ; quantity = 1.00000000
+            ; limit_price = 1000.00000
+            ; executed_quantity = 0.00000000
+            ; executed_price_avg = 0.00000
+            ; fee = 0.00000000
+            ; created_timestamp = 1453838494
+            ; updated_timestamp = 1453838494
+            ; operations = []
+            }
+          ; {
+            order_id = 2
+          ; coin_pair = "BRLBTC"
+          ; order_type = 2
+          ; status = 2
+          ; has_fills = false
+          ; quantity = 1.00000000
+          ; limit_price = 1100.00000
+          ; executed_quantity = 0.00000000
+          ; executed_price_avg = 0.00000
+          ; fee = 0.00000000
+          ; created_timestamp = 1453838494
+          ; updated_timestamp = 1453838494
+          ; operations = []
+          }
+          ; {
+            order_id = 3
+          ; coin_pair = "BRLBTC"
+          ; order_type = 2
+          ; status = 4
+          ; has_fills = true
+          ; quantity = 1.00000000
+          ; limit_price = 900.00000
+          ; executed_quantity = 1.00000000
+          ; executed_price_avg = 900.00000
+          ; fee = 6.30000000
+          ; created_timestamp = 1453838494
+          ; updated_timestamp = 1453838494
+          ; operations = [
+              {
+                operation_id = 1
+              ; quantity = 1.00000000
+              ; price = 900.00000
+              ; fee_rate = 0.70
+              ; executed_timestamp = 1453838494
+              }
+            ]
+          }
+          ; {
+            order_id = 4
+          ; coin_pair = "BRLBTC"
+          ; order_type = 1
+          ; status = 2
+          ; has_fills = true
+          ; quantity = 2.00000000
+          ; limit_price = 900.00000
+          ; executed_quantity = 1.00000000
+          ; executed_price_avg = 900.00000
+          ; fee = 0.00300000
+          ; created_timestamp = 1453838494
+          ; updated_timestamp = 1453838494
+          ; operations = [
+              {
+                operation_id = 1
+              ; quantity = 1.00000000
+              ; price = 900.00000
+              ; fee_rate = 0.30
+              ; executed_timestamp = 1453838494
+              }
+            ]
+          }
+          ]
+      }
+    
