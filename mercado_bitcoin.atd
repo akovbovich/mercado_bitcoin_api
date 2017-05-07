@@ -55,3 +55,22 @@ type order_response = order_r response
 type orders = {
   orders : order list
 }
+
+(* Orderbook types *)
+
+type book_order = {
+  order_id: int
+; quantity: float
+; limit_price: float
+; is_owner: bool
+}
+
+type orderbook_t = {
+  bids : book_order list
+; asks : book_order list
+; last_order_id: int
+}
+
+type orderbook = {
+  orderbook: orderbook_t
+}
