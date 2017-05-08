@@ -21,6 +21,8 @@ mercado_bitcoin_j.cmo mercado_bitcoin_j.cmx: mercado_bitcoin_j.mli mercado_bitco
 mercado_bitcoin_t.cmo mercado_bitcoin_t.cmx: mercado_bitcoin_t.mli mercado_bitcoin_t.ml
 	$(OCB) $@
 
+atdgen: mercado_bitcoin_j.cmo mercado_bitcoin_j.cmx mercado_bitcoin_t.cmo mercado_bitcoin_t.cmx
+
 utop: mercado_bitcoin.byte mercado_bitcoin_t.cmo mercado_bitcoin_j.cmo
 	utop -require core,nocrypto,cohttp.lwt,hex,yojson,atdgen -I _build/
 
