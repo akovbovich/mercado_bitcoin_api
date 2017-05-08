@@ -1,0 +1,25 @@
+{ "order":
+  {
+    "order_id": 3,
+    "coin_pair": "BRLBTC",
+    "order_type": 2,
+    "status": 4,
+    "has_fills": true,
+    "quantity": "1.00000000",
+    "limit_price": "900.00000",
+    "executed_quantity": "1.00000000",
+    "executed_price_avg": "900.00000",
+    "fee": "6.30000000",
+    "created_timestamp": "1453835329",
+    "updated_timestamp": "1453835329",
+    "operations": [
+        {
+            "operation_id": 1,
+            "quantity": "1.00000000",
+            "price": "900.00000",
+            "fee_rate": "0.70",
+            "executed_timestamp": "1453835329"
+        }
+    ]
+  }
+}
