@@ -1,6 +1,6 @@
 OCB = ocamlbuild
 
-all: mercado_bitcoin.native mercado_bitcoin.byte
+all: mercado_bitcoin_http.native mercado_bitcoin_http.byte
 
 clean:
 	$(OCB) -clean

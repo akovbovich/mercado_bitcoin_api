@@ -1,5 +1,7 @@
 <mercado_bitcoin.*>: thread, package(core,nocrypto,cohttp.lwt, hex, atdgen)
 
+<mercado_bitcoin_http.*>: thread, package(core,nocrypto,cohttp.lwt, hex, atdgen)
+
 <mercado_bitcoin_?.*>: thread, package(atdgen)
 
 <test/*>: thread, package(core), package(atdgen)
