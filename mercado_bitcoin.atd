@@ -1,5 +1,5 @@
 type 'a response = {
-     response_data: 'a
+     ? response_data: 'a option
      ; status_code: int
      ; server_unix_timestamp: int
      ; ?error_message: string option
@@ -56,6 +56,7 @@ type orders = {
   orders : order list
 }
 
+type orders_response = orders response
 (* Orderbook types *)
 
 type book_order = {
