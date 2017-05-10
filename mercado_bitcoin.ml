@@ -10,6 +10,14 @@ type t =
       -> (Cohttp.Response.t * Cohttp_lwt_body.t) Lwt.t
   ; coin_pair:string}
 
+type mb_error = (int * string)
+
+let unwrap_error (response: 'a Mercado_bitcoin_t.response) : ('a, mb_error) Result.t =
+  let open Mercado_bitcoin_t in
+  match response.error_message with
+  | None -> Result.Ok (Option.value_exn response.response_data)
+  | Some msg -> Result.Error (response.status_code, msg)
+
 let create_handler ~tapi_id ~tapi_secret ~coin_pair =
   { handler= Mercado_bitcoin_http.request ~tapi_id ~tapi_secret
   ; coin_pair}
@@ -28,7 +36,7 @@ let request t ~mb_method ~params ~f=
     ~mb_method
     ~params
     () >>= fun (resp, body) ->
-  (Cohttp_lwt_body.to_string body) >|= f
+  (Cohttp_lwt_body.to_string body) >|= Fn.compose unwrap_error f
 
 let list_system_messages ?level t =
   request t
