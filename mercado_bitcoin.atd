@@ -8,9 +8,15 @@ type 'a response = {
 
 (* System messages types *)
 
+type level = [
+    Info <json name="INFO">
+  | Warning <json name="WARNING">
+  | Error <json name="ERROR">
+] <ocaml repr="classic">
+
 type system_message={
      msg_date: int <json repr="string">
-     ; level: string
+     ; level: level
      ; event_code: int
      ; msg_content: string
 }
