@@ -29,6 +29,25 @@ type system_message_list = {
 
 type system_messages_response = system_message_list response
 
+type balance = {
+  available: float
+; total: float
+; ?amount_open_orders: int option
+}
+
+type limit = {
+  available: float
+; total: float
+}
+
+
+type account_info = {
+  balance : (string * balance) list <json repr="object">
+; withdrawal_limits: (string * limit) list <json repr="object">
+}
+
+type account_info_response = account_info response
+
 type operation = {
   operation_id: int
 ; quantity: float

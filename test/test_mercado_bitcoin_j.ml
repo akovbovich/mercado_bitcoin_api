@@ -150,3 +150,32 @@ let (_test_orders:unit) =
             }
           ]
       }
+
+
+let (_test_account_info:unit) =
+  json_file_assert
+    ~file:"test/account_info_sample.json"
+    ~transform:account_info_of_string
+    ~expected:
+      {
+        balance = 
+          [ "brl", {available = 3000.00000
+                   ; total=  4900.00000
+                   ; amount_open_orders = None}
+          ; "btc", {available = 10.00000000
+                   ; total = 11.00000000
+                   ; amount_open_orders = Some 3}
+          ; "ltc", { available = 500.00000000
+                   ; total = 500.00000000
+                   ; amount_open_orders = Some 0}]
+      ; withdrawal_limits =
+          [ "brl", {
+                available =  988.00
+              ; total = 20000.00}
+          ; "btc", {
+              available=3.76600000
+            ; total =5.00000000 }
+          ; "ltc" ,
+            {available = 500.00000000
+            ; total= 500.00000000}]
+        }

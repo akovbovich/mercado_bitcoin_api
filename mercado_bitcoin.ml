@@ -45,7 +45,11 @@ let list_system_messages ?level t =
     ~params:["level",level]
     ~f:Mercado_bitcoin_j.system_messages_response_of_string
 
-
+let get_account_info t =
+  request t
+    ~mb_method:"get_account_info"
+    ~params:[]
+    ~f:Mercado_bitcoin_j.account_info_response_of_string
 
 let list_orders
     ?order_type
