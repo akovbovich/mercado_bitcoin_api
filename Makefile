@@ -1,6 +1,6 @@
 OCB = ocamlbuild -use-ocamlfind -plugin-tag "package(ocamlbuild_atdgen)"
 
-all: mercado_bitcoin.native mercado_bitcoin.byte
+all: mercado_bitcoin.native mercado_bitcoin.byte test_mercado_bitcoin_j.native
 
 clean:
 	$(OCB) -clean
