@@ -14,9 +14,10 @@ type mb_error = (int * string)
 
 let unwrap_error (response: 'a Mercado_bitcoin_t.response) : ('a, mb_error) Result.t =
   let open Mercado_bitcoin_t in
-  match response.error_message with
-  | None -> Result.Ok (Option.value_exn response.response_data)
-  | Some msg -> Result.Error (response.status_code, msg)
+  match response.status_code, response.error_message with
+  | 100, None -> Result.Ok (Option.value_exn response.response_data)
+  | code, Some msg -> Result.Error (code, msg)
+  | _, _ -> Result.Error (999, "Inconsistent response status")
 
 let create_handler ~tapi_id ~tapi_secret ~coin_pair =
   { handler= Mercado_bitcoin_http.request ~tapi_id ~tapi_secret

@@ -2,7 +2,7 @@ open Core.Std
 
 type t
 
-type mb_error
+type mb_error = (int * string)
 
 val create_handler: tapi_id:string -> tapi_secret:string -> coin_pair:string -> t
 
