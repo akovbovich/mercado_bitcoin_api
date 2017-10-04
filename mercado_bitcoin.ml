@@ -51,6 +51,12 @@ let get_account_info t =
     ~params:[]
     ~f:Mercado_bitcoin_j.account_info_response_of_string
 
+let list_orderbook t =
+  request t
+    ~mb_method:"list_orderbook"
+    ~params:[ "coin_pair", Some t.coin_pair ]
+    ~f:Mercado_bitcoin_j.orderbook_response_of_string
+
 let list_orders
     ?order_type
     ?status_list

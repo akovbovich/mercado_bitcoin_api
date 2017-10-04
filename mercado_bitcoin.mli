@@ -13,6 +13,8 @@ val list_system_messages:
 
 val get_account_info : t -> (Mercado_bitcoin_t.account_info, mb_error) Result.t Lwt.t
 
+val list_orderbook: t -> (Mercado_bitcoin_j.orderbook, mb_error) Result.t Lwt.t
+
 val list_orders: ?order_type:int
   -> ?status_list:string
   -> ?has_fills:bool
