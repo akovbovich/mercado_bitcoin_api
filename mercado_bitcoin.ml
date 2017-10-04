@@ -79,5 +79,5 @@ let list_orders
       ; "to_timestamp" ,  to_timestamp]
     ~f:Mercado_bitcoin_j.orders_response_of_string
 
-let mb_id = Sys.getenv_exn "MB_TAPI_ID";;
-let mb_secret = Sys.getenv_exn "MB_TAPI_SECRET";;
+let tapi_id = Sys.getenv_exn "MB_TAPI_ID";;
+let tapi_secret = Sys.getenv_exn "MB_TAPI_SECRET";;
