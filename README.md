@@ -54,3 +54,7 @@ Next steps:
 - Create order abstraction so that other exchange can be used
 - Implement logic
 
+
+Dependencies:
+- opam install ocamlbuild-atdgen
+- OCaml 4.04

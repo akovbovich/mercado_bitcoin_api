@@ -1,4 +1,4 @@
-open Core.Std
+open Core
 open Nocrypto
 
 open Lwt
@@ -25,7 +25,8 @@ let calculate_tapi_mac ~tapi_secret body =
 
 let nonce () =
   Time.now ()
-  |> Time.to_epoch
+  |> Time.to_span_since_epoch
+  |> Time.Span.to_sec
   |> sprintf "%.0f"
   |> String.filter ~f:begin function
     | ',' | '.' -> false

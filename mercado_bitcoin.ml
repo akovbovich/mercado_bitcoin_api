@@ -1,11 +1,11 @@
-open Core.Std
+open Core
 open Lwt.Infix
 
 module MBhttp = Mercado_bitcoin_http
 
 type t =
-  { handler : mb_method:Core.Std.String.t
-      -> ?params:(string * Core.Std.String.t) list
+  { handler : mb_method:Core.String.t
+      -> ?params:(string * Core.String.t) list
       -> unit
       -> (Cohttp.Response.t * Cohttp_lwt_body.t) Lwt.t
   ; coin_pair:string}

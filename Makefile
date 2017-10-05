@@ -5,12 +5,11 @@ all: mercado_bitcoin.native mercado_bitcoin.byte test_mercado_bitcoin_j.native
 clean:
 	$(OCB) -clean
 
-%.native %.byte %.cma %.cmx %cmo:
+%.native %.byte %.cma %.cmx %cmo: %.ml %.mli
 	$(OCB) $@
 
 utop: mercado_bitcoin.cmo mercado_bitcoin_t.cmo mercado_bitcoin_j.cmo
 	utop -require core,nocrypto,cohttp.lwt,hex,yojson,atdgen -I _build/
-
 
 test_mercado_bitcoin_j.native:
 	$(OCB) test/$@

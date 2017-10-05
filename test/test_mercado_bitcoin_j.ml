@@ -1,4 +1,4 @@
-open Core.Std
+open Core
 
 open Mercado_bitcoin_j
 
