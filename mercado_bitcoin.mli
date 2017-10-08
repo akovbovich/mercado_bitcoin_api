@@ -25,6 +25,3 @@ val list_orders: ?order_type:int
   -> t
   -> (Mercado_bitcoin_j.orders, mb_error) Result.t Lwt.t
 
-val tapi_id : string
-val tapi_secret: string
-

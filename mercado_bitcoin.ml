@@ -78,6 +78,3 @@ let list_orders
       ; "from_timestamp" , from_timestamp
       ; "to_timestamp" ,  to_timestamp]
     ~f:Mercado_bitcoin_j.orders_response_of_string
-
-let tapi_id = Sys.getenv_exn "MB_TAPI_ID";;
-let tapi_secret = Sys.getenv_exn "MB_TAPI_SECRET";;
