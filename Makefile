@@ -1,14 +1,16 @@
 OCB = ocamlbuild -use-ocamlfind -plugin-tag "package(ocamlbuild_atdgen)"
 
-all: mercado_bitcoin.native mercado_bitcoin.byte test_mercado_bitcoin_j.native
+all: mercado_bitcoin_api.cma mercado_bitcoin_api.cmxa
 
 clean:
 	$(OCB) -clean
 
-%.native %.byte %.cma %.cmx %.cmo: %.ml %.mli
+%.cma %.cmxa: %.mllib
 	$(OCB) $@
 
-utop: mercado_bitcoin.cmo
+mercado_bitcoin.cma mercado_bitcoin_api.cxma: *.ml *.mli *.atd
+
+utop: mercado_bitcoin_api.cma
 	utop -require core,nocrypto,cohttp.lwt,hex,yojson,atdgen -I _build/
 
 test_mercado_bitcoin_j.native:
@@ -17,4 +19,4 @@ test_mercado_bitcoin_j.native:
 test: test_mercado_bitcoin_j.native
 	./$<
 
-.PHONY: all utop test
+.PHONY: test
