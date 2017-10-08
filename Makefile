@@ -1,4 +1,6 @@
-OCB = ocamlbuild -use-ocamlfind -plugin-tag "package(ocamlbuild_atdgen)"
+OCB_FLAGS = -use-ocamlfind -plugin-tag "package(ocamlbuild_atdgen)"
+
+OCB = ocamlbuild $(OCB_FLAGS)
 
 all: mercado_bitcoin_api.cma mercado_bitcoin_api.cmxa
 
