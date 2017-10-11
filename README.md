@@ -1,7 +1,7 @@
 Mercado Bitcoin OCaml API
 =========================
 
-A type safe OCaml library to interact with the [[https://www.mercadobitcoin.com.br/trade-api/|Mercado Bitcoin Trading API v3]]
+A type safe OCaml library to interact with the [Mercado Bitcoin Trading API v3](https://www.mercadobitcoin.com.br/trade-api/)
 
 Installation
 ------------
@@ -20,10 +20,10 @@ make opam
 Usage
 -----
 
-Currently you can build the library `cma`/`cmxa` and re-use it in your project.
+Currently you can build the library `_build/mercado_bitcoin_api.{cma,cmxa}` with
 
 ```
-make
+make all
 ```
 
 You can also play with it it in the OCaml REPL:
@@ -58,7 +58,7 @@ Core.Result.Ok
 
 Development
 -----------
-For the list of remaining things to do in this library, check out [[TODO.md]]
+For the list of remaining things to do in this library, check out [TODO.md](TODO.md)
 
 Disclaimer
 ---------
