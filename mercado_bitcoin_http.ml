@@ -9,7 +9,9 @@ module Header = Cohttp.Header
                   
 let request_host = "https://www.mercadobitcoin.net"
 
-let request_path = "/tapi/v3/"
+let api_version = "v3"
+
+let request_path = "/tapi/" ^ api_version ^ "/"
                      
 let sign ~key msg =
   let key = Cstruct.of_string key in

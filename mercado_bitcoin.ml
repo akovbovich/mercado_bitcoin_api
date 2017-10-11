@@ -3,6 +3,8 @@ open Lwt.Infix
 
 module MBhttp = Mercado_bitcoin_http
 
+let api_version = MBhttp.api_version
+
 type t =
   { handler : mb_method:Core.String.t
       -> ?params:(string * Core.String.t) list

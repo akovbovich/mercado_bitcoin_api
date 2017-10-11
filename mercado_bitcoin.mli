@@ -7,6 +7,9 @@ MercadoBitcoin API.
 
 open Core
 
+val api_version : string
+(** The api_version supported by this library *)
+
 type t
 (** Represents the handler that interacts with the API *)
    
