@@ -21,4 +21,7 @@ test_mercado_bitcoin_j.native:
 test: test_mercado_bitcoin_j.native
 	./$<
 
-.PHONY: test
+opam:
+	opam install ocamlbuild-atdgen tls nocrypto cohttp hex yojson atdgen
+
+.PHONY: opam test
