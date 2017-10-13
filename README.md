@@ -56,6 +56,14 @@ Core.Result.Ok
       ...]
 ```
 
+Testing
+-------
+To run the library tests:
+
+```
+make test
+```
+
 Development
 -----------
 For the list of remaining things to do in this library, check out [TODO.md](TODO.md)
