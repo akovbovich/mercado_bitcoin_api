@@ -15,11 +15,11 @@ mercado_bitcoin.cma mercado_bitcoin_api.cxma: *.ml *.mli *.atd
 utop: mercado_bitcoin_api.cma
 	utop -require core,nocrypto,cohttp.lwt,hex,yojson,atdgen -I _build/
 
-test_mercado_bitcoin_j.native:
+test_%.native: test/test_%.ml
 	$(OCB) test/$@
 
-test: test_mercado_bitcoin_j.native
-	./$<
+test: test_mercado_bitcoin_j.native test_mercado_bitcoin_http.native
+	$(foreach t, $?, ./$(t);)
 
 opam:
 	opam install ocamlbuild-atdgen tls nocrypto cohttp hex yojson atdgen

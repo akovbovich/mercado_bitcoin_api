@@ -4,4 +4,4 @@
 
 <mercado_bitcoin_?.*>: thread, package(atdgen)
 
-<test/*>: thread, package(core), package(atdgen)
+<test/*>: thread, package(core,nocrypto,cohttp.lwt, hex, atdgen)
